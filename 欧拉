@@ -1,0 +1,19 @@
+# 欧拉回路
+dfs每个点，对每个点减去换，然后对环上的每个点继续操作。直到dfs到的点没有环为止
+
+体现的操作就是dfs过程中一直删边，如果点没边就回退，退到有边的点继续，直到递归结束（这样就是能走环就走
+```C++
+std::vector adj(n, std::vector<int>(n));
+std::vector<int> cur(n);
+auto dfs = [&](auto &&self, int u) -> void {
+  for (int &i = cur[u]; i < n; i++) {
+    if (!adj[u][i]) {
+      adj[u][i] = adj[i][u] = 0;
+      self(self, i);
+    }
+  }
+  std::cout << u << "\n";
+};
+dfs(dfs, 0);//起点
+//如果字典序 走边要排序，然后反转顺序
+```
