@@ -31,9 +31,14 @@ namespace MemP {
     }
 
     static P clone(const P &t) {
-      P res = newNode();
-      info[res.p] = info[t.p];
-      return res;
+      if (!sta.empty()) {
+        int x = sta.back();
+        sta.pop_back();
+        info[x] = info[t.p];
+        return P(x);
+      }
+      info.push_back(info[t.p]);
+      return P(info.size() - 1);
     }
 
     T *operator->() {
